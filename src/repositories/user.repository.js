@@ -24,6 +24,10 @@ class UserRepository{
     async delete(id){
         return await this.model.findByIdAndDelete(id);
     }
+
+    async changeRole(id, role){
+        return await this.model.findByIdAndUpdate(id, {role}, {new : true});
+    }
 }
 
 module.exports = new UserRepository(User);
