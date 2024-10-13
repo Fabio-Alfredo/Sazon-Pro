@@ -19,6 +19,19 @@ const recipeSchema = new Schema({
             description:String
         }
     ],
+    category:{
+        type:String,
+        enum:['breakfast','lunch','dinner','snack','dessert']
+    },
+    nutrition:{
+        calories:{
+            type:Number,
+            default:0
+        },
+        fat:String,
+        carbohydrates:String,
+        protein:String
+    },
     image:String,
     authorId: {
         type: Schema.Types.ObjectId,
@@ -42,6 +55,7 @@ const recipeSchema = new Schema({
             ref: 'User'
         }
     ],
+    
 })
 
 const Recipe=model('Recipe',recipeSchema);
