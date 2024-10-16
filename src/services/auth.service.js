@@ -15,7 +15,7 @@ const loginUser = async (user, password)=>{
     
     if(!isValid) throw new Error('Invalid password');
 
-    const token = generateToken(user);
+    const token = generateToken(user.email, user.id);
     return token;
 }
 

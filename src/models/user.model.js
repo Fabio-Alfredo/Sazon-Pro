@@ -5,11 +5,11 @@ const userSchema = new Schema({
     name: String,
     email: String,
     password: String,
-    role: [{
-        type: String,
+    role: {
+        type: [String],
         enum: ['admin', 'user', 'moderator'],
-        default: 'user'
-    }],
+        default: ['user']
+    },
     avatar: String,
     createAt: {
         type: Date,
