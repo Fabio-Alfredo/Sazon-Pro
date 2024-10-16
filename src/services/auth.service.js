@@ -1,6 +1,7 @@
 const UserRepository = require('../repositories/user.repository');
-const {hashPassword} = require('../utils/password.util');
-const {existsUser} = require('./user.service');
+const {hashPassword, comparePassword} = require('../utils/password.util');
+const {generateToken}= require('../utils/jwt.util');
+
 
 const registerUser = async (user)=>{
 
@@ -9,6 +10,16 @@ const registerUser = async (user)=>{
     return newUser;
 }
 
+const loginUser = async (user, password)=>{
+    const isValid = await comparePassword(password, user.password);
+    
+    if(!isValid) throw new Error('Invalid password');
+
+    const token = generateToken(user);
+    return token;
+}
+
 module.exports = {
-    registerUser
+    registerUser,
+    loginUser
 }
