@@ -17,6 +17,10 @@ class UserRepository{
         return await this.model.findById(id);
     }
 
+    async exisUser(email){
+        return await this.model.findOne({email});    
+    }
+
     async update(id, user){
         return await this.model.findByIdAndUpdate(id, user, {new:true});
     }
