@@ -1,7 +1,7 @@
-const mongoose = require('mongoose');
-require('dotenv').config();
+import mongoose from 'mongoose';
+import 'dotenv/config';
 
-const dbConnection = async () =>{
+export const dbConnection = async () =>{
     const BD_URI = process.env.DATABASE_URL;
     if(!BD_URI){
         throw new Error('No se ha definido la variable de entorno BD_URI');
@@ -14,4 +14,3 @@ const dbConnection = async () =>{
     }
 }
 
-module.exports = dbConnection;

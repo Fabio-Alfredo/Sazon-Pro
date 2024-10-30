@@ -1,12 +1,15 @@
-const express = require('express');
-require('dotenv').config();
-const dbConnection = require('./src/config/dbConnection');
-const authRouter = require('./src/routes/auth.route');
+import express from 'express';
+import 'dotenv/config';
+import { dbConnection } from './src/config/dbConnection.js';
+import {mainRoute} from './src/routes/main.route.js';
+import errorHandler from './src/middleware/error.middleware.js';
 
 const app = express();
 dbConnection();
+
 app.use(express.json());
-app.use(authRouter);
+app.use(mainRoute);
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 3001;
 
