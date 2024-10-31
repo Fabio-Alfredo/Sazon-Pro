@@ -1,6 +1,4 @@
 import {User} from '../models/user.model.js';
-import { userErrorCodes } from '../utils/error/user.errorCodes.js';
-import ServiceError from '../utils/error/service.error.js';
 
 class UserRepository{
     constructor(user){
@@ -33,6 +31,10 @@ class UserRepository{
 
     async changeRole(id, role){
         return await this.model.findByIdAndUpdate(id, {role}, {new : true});
+    }
+
+    async addToken(id, token){
+        return await this.model.findByIdAndUpdate(id, {token}, {new : true});
     }
 }
 
