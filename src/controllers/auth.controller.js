@@ -9,6 +9,7 @@ export const registerUserController = async (req, res, next) => {
         const user = req.body
         const userExist = await existUserByEmail(user.email);
         if (userExist) throw createError(400, 'Email alreadi exist')
+
         const newUser = await registerUser(user);
         res.status(201).json(newUser);
     } catch (e) {
@@ -23,7 +24,7 @@ export const registerUserController = async (req, res, next) => {
                 next(createError(400, 'Error fetching user'));
                 break;
             default:
-                next()
+                next(createError(e.status, e.message))
         }
     }
 }
