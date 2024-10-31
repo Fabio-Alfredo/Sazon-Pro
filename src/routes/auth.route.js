@@ -3,7 +3,7 @@ import { Router } from 'express';
 
 const authRoute = Router();
 
-authRoute.post('/register',  registerUserController);
 authRoute.post('/login',  loginUserController);
+authRoute.get('/register',  registerUserController);
 
 export default authRoute;

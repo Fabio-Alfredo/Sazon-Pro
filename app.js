@@ -8,7 +8,7 @@ const app = express();
 dbConnection();
 
 app.use(express.json());
-app.use(mainRoute);
+app.use('/api', mainRoute);
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 3001;
