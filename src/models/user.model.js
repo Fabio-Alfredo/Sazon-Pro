@@ -10,6 +10,10 @@ const userSchema = new Schema({
         default: ['user']
     },
     avatar: String,
+    token: {
+        type: Schema.Types.ObjectId,
+        ref: 'Token'
+    },
     createAt: {
         type: Date,
         default: Date.now

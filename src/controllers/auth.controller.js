@@ -48,6 +48,9 @@ export const loginUserController = async (req, res, next) => {
             case authErrorCodes.INCORRECT_PASSWORD:
                 next(createError(400, 'Invalid credential'));
                 break;
+            case authErrorCodes.TOKEN_GENERATION_ERROR:
+                next(createError(400, 'Error generating token'));
+                break;
             default:
                 next(createError(e.status, e.message))
         }

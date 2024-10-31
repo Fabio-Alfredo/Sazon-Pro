@@ -5,8 +5,9 @@ const KEY = process.env.JWT_SECRET;
 
 export const generateToken = (email, id)=>{
     const token = jwt.sign({email, id}, KEY, {expiresIn: '1h'});
+    const expiredAt = new Date(Date.now() + 3600000);
     return {
         token,
-        expiresIn: 3600
+        expiredAt
     };
 }
