@@ -9,7 +9,7 @@ import ServiceError from '../utils/error/service.error.js';
 export const registerUser = async (user) => {
     try {
         const hashedPassword = await hashPassword(user.password);
-        if (!hashedPassword) throw new ServiceError('Error hashing password', authErrorCodes.HASHING_ERROR);
+        if (!hashedPassword) throw new ServiceError('Error hashing password', authErrorCodes.PASSWORD_HASHING_FAILED);
         newUser = await UserRepository.create({ ...user, password: hashedPassword });
         return newUser;
     } catch (e) {

@@ -36,6 +36,11 @@ class UserRepository{
     async addToken(id, token){
         return await this.model.findByIdAndUpdate(id, {token}, {new : true});
     }
+
+    async updatePassword(id, password){
+        return await this.model.findByIdAndUpdate(id, {password}, {new : true});
+    }
+
 }
 
 export default new UserRepository(User);
