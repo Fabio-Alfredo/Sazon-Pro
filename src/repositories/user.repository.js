@@ -1,4 +1,6 @@
-const User = require('../models/user.model');
+import {User} from '../models/user.model.js';
+import { userErrorCodes } from '../utils/error/user.errorCodes.js';
+import ServiceError from '../utils/error/service.error.js';
 
 class UserRepository{
     constructor(user){
@@ -17,8 +19,8 @@ class UserRepository{
         return await this.model.findById(id);
     }
 
-    async exisUser(email){
-        return await this.model.findOne({email});    
+    async exisUserByEmail(email){
+        return await this.model.findOne({email});
     }
 
     async update(id, user){
@@ -34,4 +36,4 @@ class UserRepository{
     }
 }
 
-module.exports = new UserRepository(User);
+export default new UserRepository(User);

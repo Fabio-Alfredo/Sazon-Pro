@@ -1,25 +1,28 @@
-const UserRepository = require('../repositories/user.repository');
-const {hashPassword, comparePassword} = require('../utils/password.util');
-const {generateToken}= require('../utils/jwt.util');
+import UserRepository from '../repositories/user.repository.js';
+import { hashPassword, comparePassword } from '../utils/password.util.js';
+import { generateToken } from '../utils/jwt.util.js';
+import {authErrorCodes} from '../utils/error/auth.errorCodes.js';
+import ServiceError from '../utils/error/service.error.js';
 
 
-const registerUser = async (user)=>{
-
-    const hashedPassword = await hashPassword(user.password);
-    newUser = await UserRepository.create({...user, password: hashedPassword});
-    return newUser;
+export const registerUser = async (user) => {
+    try {
+        const hashedPassword = await hashPassword(user.password);
+        if (!hashedPassword) throw new ServiceError('Error hashing password', authErrorCodes.HASHING_ERROR);
+        newUser = await UserRepository.create({ ...user, password: hashedPassword });
+        return newUser;
+    } catch (e) {
+        throw new ServiceError(e.message, e.code || authErrorCodes.CREATE_USER_ERROR);
+    }
 }
 
-const loginUser = async (user, password)=>{
-    const isValid = await comparePassword(password, user.password);
-    
-    if(!isValid) throw new Error('Invalid password');
-
-    const token = generateToken(user.email, user.id);
-    return token;
-}
-
-module.exports = {
-    registerUser,
-    loginUser
+export const loginUser = async (user, password) => {
+    try{
+        const isValidPassword = await comparePassword(password, user.password);
+        if (!isValidPassword) throw new ServiceError('Invalid password', authErrorCodes.INCORRECT_PASSWORD);
+        const token = generateToken(user);
+        return token;
+    }catch(e){
+        throw new ServiceError(e.message, e.code || authErrorCodes.INVALID_CREDENTIALS);
+    }
 }

@@ -1,5 +1,4 @@
-const Schema = require('mongoose').Schema;
-const model = require('mongoose').model;
+import { Schema, model } from 'mongoose';
 
 const recipeSchema = new Schema({
     title:{
@@ -58,6 +57,7 @@ const recipeSchema = new Schema({
     
 })
 
-const Recipe=model('Recipe',recipeSchema);
-
-module.exports=Recipe
+const Recipe = model('Recipe', recipeSchema);
+export {
+    Recipe
+}
