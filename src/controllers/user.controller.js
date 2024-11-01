@@ -1,4 +1,4 @@
-import { updatePassword, existUserByEmail  } from "../services/user.service";
+import { updatePassword, existUserByEmail, deleteUser  } from "../services/user.service";
 
 import { userErrorCodes } from "../utils/error/user.errorCodes";
 import createError from 'http-errors';
@@ -19,6 +19,22 @@ export const updatePasswordController = async (req, res, next) => {
                 break;
             case userErrorCodes.USER_UPDATE_FAILED:
                 next(createError(400, 'Error updating password'));
+                break;
+            default:
+                next(createError(e.status, e.message));
+        }
+    }
+}
+
+export const deleteUserController = async (req, res, next) => {
+    try{
+        const {user, password} = req.body;
+        await deleteUser(user, password);
+        res.status(200).json("User deleted");
+    }catch(e){
+        switch(e.code){
+            case userErrorCodes.USER_DELETE_FAILED:
+                next(createError(400, 'Error deleting user'));
                 break;
             default:
                 next(createError(e.status, e.message));

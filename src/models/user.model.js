@@ -1,4 +1,5 @@
 import { Schema, model } from 'mongoose';
+import { hash, compare } from 'bcrypt';
 
 const userSchema = new Schema({
     name: String,
@@ -19,6 +20,20 @@ const userSchema = new Schema({
         default: Date.now
     }
 })
+
+userSchema.pre('save', async function(next){
+    if(this.isModified('password')){
+        this.password = await hash(this.password, 10);
+    }
+    next();
+})
+
+
+userSchema.methods.comparePassword = async function(pass){
+    const result = await compare(pass, this.password);
+    return result;
+}
+
 
 const User = model('User', userSchema);
 

@@ -7,8 +7,6 @@ import createError from 'http-errors'
 export const registerUserController = async (req, res, next) => {
     try {
         const user = req.body
-        const userExist = await existUserByEmail(user.email);
-        if (userExist) throw createError(400, 'Email alreadi exist')
 
         const newUser = await registerUser(user);
         res.status(201).json(newUser);
